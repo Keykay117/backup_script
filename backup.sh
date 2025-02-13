@@ -16,18 +16,21 @@ then
 fi
 
 # [TASK 1]
-targetDirectory=
-destinationDirectory=
+targetDirectory=$1
+destinationDirectory=$2
 
 # [TASK 2]
-echo ""
-echo ""
+echo "The target directory is $1"
+echo "The destination directory is $2"
 
 # [TASK 3]
-currentTS=``
+currentTS=$(date "+%m/%d/%Y %H:%M:%S")
+#echo "$currentTS" #This was a test to ensure date printed correctly
+echo "$currentTS"
 
 # [TASK 4]
-backupFileName=""
+backupFileName="backup- [$currentTS].tar.gz"
+#echo "$backupFileName" #This was a test to ensure functionality
 
 # We're going to:
   # 1: Go into the target directory
@@ -37,18 +40,21 @@ backupFileName=""
 # To make things easier, we will define some useful variables...
 
 # [TASK 5]
-origAbsPath=``
+origAbsPath="/Users/kingmuffinator/be_dev_course/shellscript_finalproject/backupScript"
+#echo $origAbsPath #checking to ensure path is correct
 
 # [TASK 6]
-cd # <-
-destDirAbsPath=``
+cd $origAbsPath
+destAbsPath=($origAbsPath/backupFiles)
+#echo $destAbsPath #This was a check to ensure correct destination directory
 
 # [TASK 7]
-cd # <-
-cd # <-
+cd  $origAbsPath
+cd  $destAbsPath
 
 # [TASK 8]
-yesterdayTS=
+yesterdayTS=$(date -v-1d "+%m/%d/%Y %H:%M:%S")
+#echo $yesterdayTS #Testing to ensure date was stamped to exactly a day prior to currentTS
 
 declare -a toBackup
 
