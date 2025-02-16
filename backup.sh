@@ -58,18 +58,26 @@ yesterdayTS=$(date -v-1d "+%m/%d/%Y %H:%M:%S")
 
 declare -a toBackup
 
-for file in $() # [TASK 9]
-do
+# Following array inputs were to test the for loop
+#toBackup+=("This")
+#toBackup+=("is")
+#toBackup+=("an")
+#toBackup+=("array")
+
+for file in ${toBackup[@]}; # [TASK 9]
+do echo $file
+#done #finished the for loop here to ensure it was working properly before continuing
   # [TASK 10]
-  if (())
+  if ((`date -r $file +%s` > $yesterdayTS))
   then
     # [TASK 11]
+    toBackup+=($file)
   fi
 done
 
 # [TASK 12]
-
+tar -czvf $backupFileName ${toBackup[@]}
 # [TASK 13]
-
+mv $backupFileName $destAbsPath
 # Congratulations! You completed the final project for this course!
 
