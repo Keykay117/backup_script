@@ -24,12 +24,12 @@ echo "The target directory is $1"
 echo "The destination directory is $2"
 
 # [TASK 3]
-currentTS=$(date "+%m/%d/%Y %H:%M:%S")
-#echo "$currentTS" #This was a test to ensure date printed correctly
-echo "$currentTS"
+currentTS=$(date +%s)
+#echo "$currentTS"
+timestamp=$(date "+%Y-%m-%d_%H-%M-%S")
 
 # [TASK 4]
-backupFileName="backup- [$currentTS].tar.gz"
+backupFileName="backup-${timestamp}.tar.gz"
 #echo "$backupFileName" #This was a test to ensure functionality
 
 # We're going to:
@@ -53,31 +53,26 @@ cd  $origAbsPath
 cd  $destAbsPath
 
 # [TASK 8]
-yesterdayTS=$(date -v-1d "+%m/%d/%Y %H:%M:%S")
+yesterdayTS=$((currentTS - 86400))
 #echo $yesterdayTS #Testing to ensure date was stamped to exactly a day prior to currentTS
 
 declare -a toBackup
 
-# Following array inputs were to test the for loop
-#toBackup+=("This")
-#toBackup+=("is")
-#toBackup+=("an")
-#toBackup+=("array")
+toBackup+=($(ls "$targetDirectory"))
 
 for file in ${toBackup[@]}; # [TASK 9]
-do echo $file
+do filePath="$targetDirectory/$file"
 #done #finished the for loop here to ensure it was working properly before continuing
   # [TASK 10]
-  if ((`date -r $file +%s` > $yesterdayTS))
-  then
+  if [[ -f "$filePath" && $(date -r "$filePath" +%s) -gt $yesterdayTS ]];
     # [TASK 11]
+    then
     toBackup+=($file)
   fi
 done
 
 # [TASK 12]
-tar -czvf $backupFileName ${toBackup[@]}
+tar -czvf "$backupFileName" "${toBackup[@]}"
 # [TASK 13]
-mv $backupFileName $destAbsPath
+mv "$backupFileName" "$destAbsPath"
 # Congratulations! You completed the final project for this course!
-
