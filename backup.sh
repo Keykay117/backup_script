@@ -40,17 +40,17 @@ backupFileName="backup-${timestamp}.tar.gz"
 # To make things easier, we will define some useful variables...
 
 # [TASK 5]
-origAbsPath="/Users/kingmuffinator/be_dev_course/shellscript_finalproject/backupScript"
+origAbsPath=$(pwd)
 #echo $origAbsPath #checking to ensure path is correct
 
 # [TASK 6]
 cd $origAbsPath
-destAbsPath=($origAbsPath/backupFiles)
+destAbsPath="$destinationDirectory"
 #echo $destAbsPath #This was a check to ensure correct destination directory
 
 # [TASK 7]
 cd  $origAbsPath
-cd  $destAbsPath
+cd  $targetDirectory
 
 # [TASK 8]
 yesterdayTS=$((currentTS - 86400))
@@ -58,13 +58,11 @@ yesterdayTS=$((currentTS - 86400))
 
 declare -a toBackup
 
-toBackup+=($(ls "$targetDirectory"))
-
-for file in ${toBackup[@]}; # [TASK 9]
-do filePath="$targetDirectory/$file"
+for file in *; # [TASK 9]
+do
 #done #finished the for loop here to ensure it was working properly before continuing
   # [TASK 10]
-  if [[ -f "$filePath" && $(date -r "$filePath" +%s) -gt $yesterdayTS ]];
+  if [[ -f "$file" && $(date -r "$file" +%s) -gt $yesterdayTS ]]
     # [TASK 11]
     then
     toBackup+=($file)
